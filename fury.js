@@ -97,7 +97,7 @@ function run(path,callback) {
 		var canonicalHost = options.host === '0.0.0.0' ? '127.0.0.1' : options.host;    
 		console.log('Starting up http-server, serving ',server.root);
 		console.log("Stop with CTRL+C");
-		opener("http://127.0.0.1/base.html");
+		opener("http://127.0.0.1:8080/base.html");
 	
 	});	
 	//callback();
