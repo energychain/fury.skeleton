@@ -1,7 +1,7 @@
 {
-  "name": "fury",
-  "version": "1.0.0",
-  "description": "Skeleton to rapid prototype Energy Blockchain based applications Edit",
+  "name": "fury.cli",
+  "version": "1.0.1",
+  "description": "Skeleton to rapid prototype Energy Blockchain based applications",
   "main": "fury.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,8 +18,8 @@
     "stromdao"
   ],
   "bin": {
-   "fury": "./fury.js"
- },
+    "fury": "./fury.js"
+  },
   "author": "Thorsten Zoerner <thorsten.zoerner@stromdao.de>",
   "license": "MIT",
   "bugs": {
@@ -33,5 +33,6 @@
     "request": "^2.81.0",
     "stromdao-businessobject": "^0.4.58",
     "vorpal": "^1.12.0"
-  }
+  },
+  "devDependencies": {}
 }
