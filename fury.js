@@ -68,8 +68,8 @@ function init(path,callback) {
 				 	res.on('end', function() {	
 						fs.writeFile(path+"/base.html", base_html, function(err) {   
 							fs.writeFile(path+"/base.js", base_js, function(err) { 
-								vorpal.log(path+" created");								
-								callback();
+								vorpal.log(path+" created");	
+								auth(path,callback);															
 							});
 						}); 		
 					});
