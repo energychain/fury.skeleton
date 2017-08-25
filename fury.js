@@ -3,6 +3,7 @@
 const vorpal = require('vorpal')();
 const querystring = require('querystring');
 const request = require('request');
+const httpServer = require('http-server');
 var interactive = vorpal.parse(process.argv, {use: 'minimist'})._ === undefined;
 const StromDAONode = require('stromdao-businessobject');
 const rpcurl="https://fury.network/rpc";
@@ -16,7 +17,7 @@ var https = require('https');
 
 persist.initSync();
 
-function auth(callback) {
+function auth(path,callback) {
 	var node = new StromDAONode.Node({external_id:extid,testMode:true,rpc:rpcurl,abilocation:"https://cdn.rawgit.com/energychain/StromDAO-BusinessObject/master/smart_contracts/"});
 	 var options = {
         host :  'fury.network',
@@ -75,12 +76,35 @@ function init(path,callback) {
 		});			
 	});	
 }
-
+function run(path,callback) {
+	
+	logger = {
+    info: console.log,
+    request: function (req, res, error) {
+			console.log(req.url);
+    }
+  };
+  
+	options = {};
+	options.root="./"+path+"/";
+	options.port=8080;
+	options.autoIndex=true;
+	options.logFn=logger.request;	
+	
+	var server = httpServer.createServer(options);
+	server.listen(options.port, options.host, function () {
+		var canonicalHost = options.host === '0.0.0.0' ? '127.0.0.1' : options.host;    
+		console.log('Starting up http-server, serving ',server.root);
+		console.log("Stop with CTRL+C");
+	
+	});	
+	//callback();
+}
 function publish(path,callback) {
 
     var token=persist.getItemSync("sectoken");
     if(!token) {
-		auth(publush(path,callback));
+		auth(path,publish(path,callback));
 	}
 	obj=[];
 	
@@ -95,23 +119,32 @@ function publish(path,callback) {
 	});
 	
 }
-
-vorpal
-  .command('publish <path>')  
-  .action(function (args, callback) {	 
-   publish(args.path,callback);
-});	
-
 vorpal
   .command('init <path>')  
+  .description("Create a subfolder path and inits its content") 
   .action(function (args, callback) {	 
    init(args.path,callback);
 });	
 
 vorpal
-  .command('auth')  
+  .command('run <path>')  
+  .description("Starts local http server for given subfolder (Stop with CTRL+C)") 
   .action(function (args, callback) {	 
-   auth(callback);
+   run(args.path,callback);
+});	
+
+
+vorpal
+  .command('publish <path>') 
+  .description("Publish given subfolder to fury.network") 
+  .action(function (args, callback) {	 
+   publish(args.path,callback);
+});	
+
+vorpal
+  .command('auth <path>')  
+  .action(function (args, callback) {	 
+   auth(args.path,callback);
 });	
 
 if (interactive) {

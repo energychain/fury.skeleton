@@ -1,6 +1,6 @@
 {
-  "name": "fury.cli",
-  "version": "1.0.1",
+  "name": "fury.network",
+  "version": "1.0.4",
   "description": "Skeleton to rapid prototype Energy Blockchain based applications",
   "main": "fury.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "stromdao"
   ],
   "bin": {
-    "fury": "./fury.js"
+    "fury": "./fury.js",
+    "fury.network": "./fury.js"
   },
   "author": "Thorsten Zoerner <thorsten.zoerner@stromdao.de>",
   "license": "MIT",
