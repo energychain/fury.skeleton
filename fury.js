@@ -11,6 +11,7 @@ const apiurl="https://fury.network/api";
 const fs = require('fs');
 const persist = require("node-persist");
 const extid="fury-cli";
+var opener     = require('opener');
 
 var https = require('https');
 
@@ -67,7 +68,7 @@ function init(path,callback) {
 				 	res.on('end', function() {	
 						fs.writeFile(path+"/base.html", base_html, function(err) {   
 							fs.writeFile(path+"/base.js", base_js, function(err) { 
-								vorpal.log(path+" created");
+								vorpal.log(path+" created");								
 								callback();
 							});
 						}); 		
@@ -96,6 +97,7 @@ function run(path,callback) {
 		var canonicalHost = options.host === '0.0.0.0' ? '127.0.0.1' : options.host;    
 		console.log('Starting up http-server, serving ',server.root);
 		console.log("Stop with CTRL+C");
+		opener("http://127.0.0.1/base.html");
 	
 	});	
 	//callback();
