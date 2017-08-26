@@ -1,5 +1,5 @@
 # fury.network
-Skeleton to rapid prototype Energy Blockchain based applications. It is designed to work with the STROMDAO Business Object
+Skeleton to rapid prototype Energy Blockchain based applications. It is designed to work with the [STROMDAO Business Object](https://github.com/energychain/StromDAO-BusinessObject)
 
 ## Install
 ```
@@ -20,3 +20,6 @@ This will initialize a new subfolder with the name <path>. In this folder you fi
 If you use `fury run` you could test your coe directly in your browser at http://localhost:8080/base.html
 
  
+# Tutorial
+
+https://www.youtube.com/watch?v=qmZNgH0sTEk
