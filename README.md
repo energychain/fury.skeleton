@@ -17,7 +17,7 @@ fury publish <path>
 
 This will initialize a new subfolder with the name <path>. In this folder you find the two main files `base.html` and `base.js`. Put your code into those two files. 
 
-If you use `fury run` you could test your coe directly in your browser at http://localhost:8080/base.html
+If you use `fury run` you could test your code directly in your browser at http://localhost:8080/base.html
 
  
 # Tutorial

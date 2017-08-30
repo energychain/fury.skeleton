@@ -1,6 +1,6 @@
 {
   "name": "fury.network",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Skeleton to rapid prototype Energy Blockchain based applications",
   "main": "fury.js",
   "scripts": {

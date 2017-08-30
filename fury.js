@@ -77,7 +77,7 @@ function init(path,callback) {
 		});			
 	});	
 }
-function run(path,callback) {
+function run(path,port,callback) {
 	
 	logger = {
     info: console.log,
@@ -88,7 +88,7 @@ function run(path,callback) {
   
 	options = {};
 	options.root="./"+path+"/";
-	options.port=8080;
+	options.port=port;
 	options.autoIndex=true;
 	options.logFn=logger.request;	
 	
@@ -97,7 +97,7 @@ function run(path,callback) {
 		var canonicalHost = options.host === '0.0.0.0' ? '127.0.0.1' : options.host;    
 		console.log('Starting up http-server, serving ',server.root);
 		console.log("Stop with CTRL+C");
-		opener("http://127.0.0.1:8080/base.html");
+		opener("http://127.0.0.1:"+port+"/base.html");
 	
 	});	
 	//callback();
@@ -130,9 +130,13 @@ vorpal
 
 vorpal
   .command('run <path>')  
+  .option('-p <port>','Port Number of HTTP Server (Default:8080)')
   .description("Starts local http server for given subfolder (Stop with CTRL+C)") 
   .action(function (args, callback) {	 
-   run(args.path,callback);
+	var port=8080;
+	console.log(args.options);
+	if(args.options.p) port=args.options.p;
+	run(args.path,port,callback);
 });	
 
 
