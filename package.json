@@ -1,6 +1,6 @@
 {
   "name": "fury.network",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Skeleton to rapid prototype Energy Blockchain based applications",
   "main": "fury.js",
   "scripts": {
@@ -28,7 +28,9 @@
   },
   "homepage": "https://github.com/energychain/fury.skeleton#readme",
   "dependencies": {
+    "async": "^2.5.0",
     "http-server": "^0.10.0",
+    "ipfs": "^0.26.0",
     "node-persist": "^2.1.0",
     "opener": "^1.4.3",
     "querystring": "^0.2.0",

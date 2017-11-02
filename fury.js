@@ -66,7 +66,7 @@ function init(path,callback) {
 			req=https.get(options,function(res) {
 				 	res.on('data', function(d) {base_js+=d;});
 				 	res.on('end', function() {	
-						fs.writeFile(path+"/base.html", base_html, function(err) {   
+						fs.writeFile(path+"/index.html", base_html, function(err) {   
 							fs.writeFile(path+"/base.js", base_js, function(err) { 
 								vorpal.log(path+" created");	
 								auth(path,callback);															
@@ -97,29 +97,27 @@ function run(path,port,callback) {
 		var canonicalHost = options.host === '0.0.0.0' ? '127.0.0.1' : options.host;    
 		console.log('Starting up http-server, serving ',server.root);
 		console.log("Stop with CTRL+C");
-		opener("http://127.0.0.1:"+port+"/base.html");
+		opener("http://127.0.0.1:"+port+"/index.html");
 	
 	});	
 	//callback();
 }
+
 function publish(path,callback) {
+	var data=[];
 
-    var token=persist.getItemSync("sectoken");
-    if(!token) {
-		auth(path,publish(path,callback));
-	}
-	obj=[];
+	data.push({path:"/fury.network"});
+	fs.readdirSync(path).forEach(fname => {	
+			data.push({content:fs.createReadStream(path+"/"+fname),path:"/fury.network/"+fname});
+	})
 	
-	obj.push({name:'base.html',type:"html",content:fs.readFileSync(path+"/base.html").toString('utf-8')});
-	obj.push({name:'base.js',type:"js",content:fs.readFileSync(path+"/base.js").toString('utf-8')});
-	
-
-	request.post({url:apiurl+'/cold/set/?token='+token, formData:{bucket:'playground',obj: JSON.stringify(obj),token:token}},function(err,httpResponse,body){
-		var json=JSON.parse(httpResponse.body);
-		vorpal.log("Inject URL","https://fury.network/?extid="+path+"&inject="+json.address);
-		callback();			
-	});
-	
+	ipfs.files.add(data, function (err, files) {			
+			for(var i=0;i<files.length;i++) {
+				request.get("https://fury.network/ipfs/"+files[i].hash,function(e,h,b) {});				
+			}							
+			vorpal.log("Inject URL","https://fury.network/ipfs/"+files[0].hash+"?extid=fury.network.cli");
+			callback()		
+	});			
 }
 vorpal
   .command('init <path>')  
@@ -152,16 +150,19 @@ vorpal
   .action(function (args, callback) {	 
    auth(args.path,callback);
 });	
-
-if (interactive) {
-    vorpal
-        .delimiter('fury.network $')
-        .show()
-} else {
-    // argv is mutated by the first call to parse.
-    process.argv.unshift('')
-    process.argv.unshift('')
-    vorpal
-        .delimiter('')
-        .parse(process.argv)
-}
+const IPFS = require('ipfs')
+const ipfs = new IPFS()
+ipfs.on('ready', () => {
+	if (interactive) {
+		vorpal
+			.delimiter('fury.network $')
+			.show()
+	} else {
+		// argv is mutated by the first call to parse.
+		process.argv.unshift('')
+		process.argv.unshift('')
+		vorpal
+			.delimiter('')
+			.parse(process.argv)
+	}
+});
