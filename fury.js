@@ -153,6 +153,9 @@ vorpal
 const IPFS = require('ipfs')
 const ipfs = new IPFS()
 ipfs.on('ready', () => {
+
+});
+
 	if (interactive) {
 		vorpal
 			.delimiter('fury.network $')
@@ -165,4 +168,3 @@ ipfs.on('ready', () => {
 			.delimiter('')
 			.parse(process.argv)
 	}
-});
