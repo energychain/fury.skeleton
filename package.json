@@ -1,6 +1,6 @@
 {
   "name": "fury.network",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Skeleton to rapid prototype Energy Blockchain based applications",
   "main": "fury.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "async": "^2.5.0",
     "http-server": "^0.10.0",
     "ipfs": "^0.26.0",
-    "leveldown": "^2.0.0",
+    "leveldown": "^1.1.0",
     "node-persist": "^2.1.0",
     "opener": "^1.4.3",
     "querystring": "^0.2.0",
