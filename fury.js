@@ -115,7 +115,8 @@ function publish(path,callback) {
 			for(var i=0;i<files.length;i++) {
 				request.get("https://fury.network/ipfs/"+files[i].hash,function(e,h,b) {});				
 			}							
-			vorpal.log("Inject URL","https://fury.network/ipfs/"+files[0].hash+"?extid=fury.network.cli");
+			vorpal.log("Inject URL (fury)","https://fury.network/ipfs/"+files[0].hash+"?extid=fury.network.cli");
+			vorpal.log("Inject URL (ipfs)","https://ipfs.io/ipfs/"+files[0].hash+"?extid=fury.network.cli");
 			callback()		
 	});			
 }
